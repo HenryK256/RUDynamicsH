@@ -14,7 +14,7 @@ DATAS = [MotorData() for _ in IDS]
 # For this model, motor ID 0 is the hip and ID 1 is the knee
 
 TRIGGEAR = queryGearRatio(MotorType.A1) / (2 * math.pi)
-theta = 0
+thetas = [0.0, 0.0]
 
 for id, cmd, data in IDS, CMDS, DATAS:
     data.motorType = MotorType.A1
@@ -22,16 +22,16 @@ for id, cmd, data in IDS, CMDS, DATAS:
     cmd.id = id
 
 while True:
-    for cmd, data in CMDS, DATAS:
+    for id, cmd, data in IDS, CMDS, DATAS:
         cmd.mode = queryMotorMode(MotorType.A1,MotorMode.FOC)
         cmd.q    = 0.0
-        cmd.dq   = theta * TRIGGEAR
+        cmd.dq   = theta[id] * TRIGGEAR
         cmd.kp   = 0.0
         cmd.kd   = 0.01
         cmd.tau  = 0.0
     serial.sendRecv(cmd, data)
     print('\n')
-    print("theta: " + cmd)
+    print("theta: " + str(theta[id]))
     print('\n')
     time.sleep(0.1) # 100 ms
 
@@ -42,4 +42,5 @@ while True:
 sec1, sec2 = 1, 1 # Assuming they each have a unit length of 1 for now
 
 def funct(x, y): # Takes in two coordinates => outputs two thetas
-
+    theta[0] = math.acos((sec1*sec1+x*x+y*y-sec2*sec2)/(2*sec1*math.sqrt(x*x+y*y))) - math.atan(x/y)
+    theta[1] = math.acos((sec1*sec1+sec2*sec2-x*x-y*y)/(2*sec1*sec2))

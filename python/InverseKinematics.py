@@ -24,8 +24,8 @@ for id, cmd, data in IDS, CMDS, DATAS:
 while True:
     for id, cmd, data in IDS, CMDS, DATAS:
         cmd.mode = queryMotorMode(MotorType.A1,MotorMode.FOC)
-        cmd.q    = 0.0
-        cmd.dq   = theta[id] * TRIGGEAR
+        cmd.q    = theta[id] * TRIGGEAR
+        cmd.dq   = 0.0
         cmd.kp   = 0.0
         cmd.kd   = 0.01
         cmd.tau  = 0.0

@@ -39,7 +39,7 @@ while True:
 # The hip joint 45 degrees from vertical to the left
 # The units are currently arbitrary until measurements of the leg are given
 
-sec1, sec2 = 1, 1 # Assuming they each have a unit length of 1 for now
+sec1, sec2 = 7.5, 12.9 # Measured lengths of leg segments
 
 def funct(x, y): # Takes in two coordinates => outputs two thetas
     theta[0] = math.acos((sec1*sec1+x*x+y*y-sec2*sec2)/(2*sec1*math.sqrt(x*x+y*y))) - math.atan(x/y)

@@ -1,9 +1,11 @@
 import sys, time, math
+import numpy as np
 
 from RUDynamicsH.python.InverseKinematics import theta
 
 sys.path.append('../lib')
 from unitree_actuator_sdk import *
+
 
 class Motor():
     def __init__(self, id, serial):
@@ -21,17 +23,25 @@ class Motor():
         self.theta = 0
 
     def moveToPos(self, pos):
-        self.theta=theta
+        self.theta = theta
         self.cmd.q = self.theta * queryGearRatio(MotorType.GO_M8010_6) / (2 * math.pi)
         self._serial.sendRecv(self.cmd, self.data)
 
-def generatePath():
-    return [0],[0]
 
-def funct(x, y): # Takes in two coordinates => outputs two thetas
+def generatePath():
+    t = list(np.linspace(0, 2*3.14, 100))
+    bias = 5
+    radius = 0.5
+    xp = [radius*math.cos(x) + 5 for x in t]
+    yp = [radius*math.sin(x) + 5 for x in t]
+    return xp, yp
+
+
+def funct(x, y):  # Takes in two coordinates => outputs two thetas
     sec1, sec2 = 7.5, 12.9  # Measured lengths of leg segments
-    theta0 = math.acos((sec1*sec1+x*x+y*y-sec2*sec2)/(2*sec1*math.sqrt(x*x+y*y))) - math.atan(x/y)
-    theta1 = math.acos((sec1*sec1+sec2*sec2-x*x-y*y)/(2*sec1*sec2))
+    theta0 = math.acos((sec1 * sec1 + x * x + y * y - sec2 * sec2) / (2 * sec1 * math.sqrt(x * x + y * y))) - math.atan(
+        x / y)
+    theta1 = math.acos((sec1 * sec1 + sec2 * sec2 - x * x - y * y) / (2 * sec1 * sec2))
     return theta0, theta1
 
 
@@ -43,8 +53,8 @@ if __name__ == "__main__":
 
     pos_x, pos_y = generatePath()
 
-    for x,y in zip(pos_x, pos_y):
-        t1,t2 = funct(x,y)
+    for x, y in zip(pos_x, pos_y):
+        t1, t2 = funct(x, y)
         motor0.moveToPos(t1)
         motor1.moveToPos(t2)
         time.sleep(0.01)

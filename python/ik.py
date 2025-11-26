@@ -1,7 +1,6 @@
 import sys, time, math
 import numpy as np
 
-from RUDynamicsH.python.InverseKinematics import theta
 
 sys.path.append('../lib')
 from unitree_actuator_sdk import *

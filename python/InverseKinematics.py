@@ -35,9 +35,9 @@ while True:
     print('\n')
     time.sleep(0.1) # 100 ms
 
-# The coordinate system used here has (0, 0) with the knee joint at 90 degrees and
-# The hip joint 45 degrees from vertical to the left
-# The units are currently arbitrary until measurements of the leg are given
+# The coordinate system used here has the hip joint at (0, 0)
+# Mainly operates in 3rd and 4th quadrants
+# Desmos simulation: https://www.desmos.com/calculator/xvefhffexu
 
 sec1, sec2 = 7.5, 12.9 # Measured lengths of leg segments
 

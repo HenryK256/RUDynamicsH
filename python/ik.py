@@ -12,6 +12,7 @@ class Motor():
         self.cmd = MotorCmd()
         self.data = MotorData()
         self.data.motorType = MotorType.GO_M8010_6
+        self.cmd.motorType = MotorType.GO_M8010_6
         self.cmd.mode = queryMotorMode(MotorType.GO_M8010_6, MotorMode.FOC)
         self.cmd.id = id
         self.cmd.dq = 0.0

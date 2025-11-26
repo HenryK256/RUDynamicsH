@@ -82,6 +82,7 @@ def main():
     l2 = 12.9
     for x, y in zip(pos_x, pos_y):
         t1, t2 = ik_planar(l1, l2, x, y)
+        print(t1,t2,"thetas")
         if check_c_space(l1, l2, x, y) and check_joint_constraints(t1, t2):
             motor0.moveToPos(t1)
             motor1.moveToPos(t2)
@@ -100,4 +101,4 @@ def main1():
         motor.moveToPos(i)
 
 if __name__ == "__main__":
-    main1()
+    main()

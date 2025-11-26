@@ -21,7 +21,7 @@ class Motor():
 
         self.theta = 0
 
-    def moveToPos(self, pos):
+    def moveToPos(self, theta):
         self.theta = theta
         self.cmd.q = self.theta * queryGearRatio(MotorType.GO_M8010_6) / (2 * math.pi)
         self._serial.sendRecv(self.cmd, self.data)

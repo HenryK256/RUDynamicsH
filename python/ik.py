@@ -96,8 +96,8 @@ def main1():
     motor= Motor(0,serial)
 
     motor.moveToPos(0)
-    for i in range(0,60):
+    for i in list(np.linspace(0, math.pi, 100)):
         motor.moveToPos(i)
 
 if __name__ == "__main__":
-    main()
+    main1()

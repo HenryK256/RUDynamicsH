@@ -5,7 +5,7 @@ from RUDynamicsH.python.InverseKinematics import theta
 
 sys.path.append('../lib')
 from unitree_actuator_sdk import *
-
+# all units in meters and radians
 
 class Motor():
     def __init__(self, id, serial):
@@ -71,8 +71,7 @@ def funct(x, y):  # Takes in two coordinates => outputs two thetas
     theta1 = math.acos((sec1 * sec1 + sec2 * sec2 - x * x - y * y) / (2 * sec1 * sec2))
     return theta0, theta1
 
-
-if __name__ == "__main__":
+def main():
     serial = SerialPort('/dev/ttyUSB0')
 
     motor0 = Motor(0, serial)
@@ -82,11 +81,23 @@ if __name__ == "__main__":
     l1 = 7.5
     l2 = 12.9
     for x, y in zip(pos_x, pos_y):
-        t1, t2 = ik_planar(l1,l2,x, y)
-        if check_c_space(l1, l2, x, y) and check_joint_constraints(t1,t2):
+        t1, t2 = ik_planar(l1, l2, x, y)
+        if check_c_space(l1, l2, x, y) and check_joint_constraints(t1, t2):
             motor0.moveToPos(t1)
             motor1.moveToPos(t2)
         else:
             print("bound exceeded check path")
             exit()
         time.sleep(0.01)
+
+def main1():
+    serial = SerialPort('/dev/ttyUSB0')
+
+    motor= Motor(0,serial)
+
+    motor.moveToPos(0)
+    for i in range(0,60):
+        motor.moveToPos(i)
+
+if __name__ == "__main__":
+    main1()

@@ -100,4 +100,4 @@ def main1():
         motor.moveToPos(i)
 
 if __name__ == "__main__":
-    main1()
+    main()
